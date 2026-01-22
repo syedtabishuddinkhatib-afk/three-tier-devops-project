@@ -6,9 +6,9 @@ metadata:
 spec:
   accessModes:
     - ReadWriteOnce
+  storageClassName: gp2
   resources:
     requests:
       storage: 5Gi
-  storageClassName: gp2
-  volumeName: postgres-pv        # 🔑 THIS is the binding
+
 
