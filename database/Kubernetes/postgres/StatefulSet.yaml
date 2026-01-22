@@ -25,13 +25,24 @@ spec:
         - name: POSTGRES_PASSWORD
           value: postgres
         - name: PGDATA
-          value: /var/lib/postgresql/data/pgdata   # 🔑 FIX
+          value: /var/lib/postgresql/data/pgdata   # 🔑 CRITICAL
         volumeMounts:
         - name: postgres-storage
-          mountPath: /var/lib/postgresql/data     # 🔑 FIX
+          mountPath: /var/lib/postgresql/data      # 🔑 CRITICAL
         - name: initdb
           mountPath: /docker-entrypoint-initdb.d
       volumes:
       - name: initdb
         configMap:
           name: postgres-initdb
+
+  volumeClaimTemplates:
+  - metadata:
+      name: postgres-storage
+    spec:
+      accessModes:
+        - ReadWriteOnce
+      storageClassName: gp2
+      resources:
+        requests:
+          storage: 5Gi
