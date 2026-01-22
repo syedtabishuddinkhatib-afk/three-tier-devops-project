@@ -2,6 +2,7 @@ apiVersion: apps/v1
 kind: StatefulSet
 metadata:
   name: postgres
+  namespace: prod
 spec:
   serviceName: postgres
   replicas: 1
@@ -23,15 +24,14 @@ spec:
           value: postgres
         - name: POSTGRES_PASSWORD
           value: postgres
+        - name: PGDATA
+          value: /var/lib/postgresql/data/pgdata   # 🔑 FIX
         volumeMounts:
         - name: postgres-storage
-          mountPath: /var/lib/postgresql
+          mountPath: /var/lib/postgresql/data     # 🔑 FIX
         - name: initdb
           mountPath: /docker-entrypoint-initdb.d
       volumes:
-      - name: postgres-storage
-        persistentVolumeClaim:
-          claimName: postgres-pvc
       - name: initdb
         configMap:
           name: postgres-initdb
