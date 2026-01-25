@@ -9,7 +9,7 @@ pipeline {
     }
 
     environment {
-        AWS_REGION     = credentials('aws-region')
+        AWS_REGION     = "ap-south-1"
         AWS_ACCOUNT_ID = credentials('aws-account-id')
 
         AWS_ACCESS_KEY_ID     = credentials('aws-access-key-id')
